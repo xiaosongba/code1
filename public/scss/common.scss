@@ -1,0 +1,80 @@
+/* 全局公用的样式 */
+html,body{
+    height: 100%;
+    /* lv-mian高度不起作用，高度受到限制了 */
+}
+body{
+    background: #ccc;
+}
+.container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.lv-head{
+    display: flex;
+    /* 想让它一左一右 */
+    justify-content:space-between;
+    /* 最左边，最右边 */
+    align-items: center;
+    /* 上下居中 */
+    height: 50px;
+    border-bottom: 1px solid #000;
+    .logo{
+    font-size: 30px;
+    text-decoration: none;
+    }
+    .right{
+        display: flex;
+        align-items: center;
+        // 上下对齐；
+
+    }
+}
+.lv-menu{
+    width:250px;
+    height:100%;
+    overflow-y: auto;
+    border-right: 1px solid grey;
+    li{
+        height:50px;
+        line-height: 50px;
+        border-bottom: 1px solid #000;
+    }
+}
+.lv-foot{
+    height: 50px;
+    border-top:1px solid #000;
+}
+/* 内容区占据其余的部分， */
+.lv-main{
+    flex: 1;
+    display: flex;
+    background-color: floralwhite;
+    .body{
+        flex: 1;
+        // 因为表格太小了；
+        padding: 0;
+        padding-left: 10px;
+    }
+}
+.search-bar{
+    margin: 15px 5px;
+    padding-left: 10px;
+}
+
+
+// ---------------------对bootstrap样式的修改-----------------
+.table-hover>tbody>tr:hover{
+    background-color:#d7ff556b;
+}
+
+.btn-group-lg>.btn, .btn-lg{
+    padding:3px 13px;
+}
+.form-control{
+    padding:6px 24px;
+}
+.pagination{
+    float: right;
+}
