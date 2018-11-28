@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var arr=require('./config/ingoreRouter');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -18,6 +18,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(function(req,res,next){ 
+
+console.log(req.url);
+// 排除这些页面
+if(arr.indexOf(req.url)>-1){
+  // 判断字符串是否在数组中，大于-1，说明就存在；(或者！=-1)
+  next();
+  return;
+}
+var nickname=req.cookies.nickname;
+if(nickname){ 
+  next()
+}else{
+   res.redirect('/login.html');
+}
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
