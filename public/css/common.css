@@ -69,5 +69,8 @@ html, body {
 
 .pagination {
   float: right; }
+img{
+  width: 100px;
+}
 
 /*# sourceMappingURL=common.css.map */

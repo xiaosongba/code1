@@ -4,7 +4,7 @@ var ObjectId=require('mongodb').ObjectId;
 var async=require('async');
 var router = express.Router();
 var url='mongodb://localhost:27017';
-
+// 用户的数据显示
 router.get('/', function(req, res, next) {
   // 前端穿过来的页面，页码
 var page=parseInt(req.query.page) || 1;
@@ -63,44 +63,6 @@ MongoClient.connect(url,{useNewUrlParser:true},function(err,client){
   })
 })
 
-//   MongoClient.connect(url,{useNewUrlParser:true},function(err,client){
-//     if(err){
-//       console.log("链接数据库失败",err);
-//       // 
-//       res.render("error",{
-//         message:'连接数据库失败',
-//         error:err
-//       });
-//       // 写了return不往下面走了；
-//       return ;
-//     }
-//     // 输入数据库名字；得到db对象；
-// var db=client.db('project');
-// // 选择操作的集合,toArray()以数组的形式暴露出来；
-// db.collection('user').find().toArray(function(err,data){
-//   if(err){
-//     // 这是后台看的，控制台可以看，
-//     console.log("查询用户数据失败",err);
-//     //有错误渲染 error.ejs这个模板；
-//     res.render('error',{
-//       message:'查询失败',
-//       // 把错误对象传给它
-//       error:err
-//     })
-//   }else{
-//     // else就是查询成功；
-//   console.log(data);
-//   res.render('users',{
-//     list:data
-//   });
-//   }
-//   //  MongoClient.connect(url,function(err,client){,
-//   // 关闭数据库的连接
-//   client.close();
-
-// })
-
-//   });
 
 });
 
@@ -278,6 +240,80 @@ MongoClient.connect(url,{useNewUrlParser:true},function(err,client){
   })
 })
 
+})
+router.get('/search',function(req,res,next){
+
+  // console.log(req.query.nickname+"======"+"进来了search");
+  var nickname=req.query.nickname;
+  var filter=new RegExp(nickname);
+  var page=parseInt(req.query.page) || 1;
+// 每页显示的条数
+var pageSize=parseInt(req.query.pageSize) || 5;
+// 总条数是哟啊查询数据库得来；
+var totalSize=0;
+  MongoClient.connect(url,{useNewUrlParser:true},function(err,client){
+    if(err){
+      res.render('error',{
+        message:'链接失败',
+        error:err
+      })
+      return;
+    }
+    var db=client.db('project');
+    async.series([
+      function(cb){
+    db.collection('user').find().count(function(err,num){
+      if(err){
+       cb(err)
+      }else{
+        totalSize=num;
+        cb(null);
+      }
+    })
+  
+      },
+      function(cb){
+    db.collection('user').find({nickname:nickname}).limit(pageSize).skip(page*pageSize-pageSize).toArray(function(err,data){
+      if(err){
+        cb(err);
+      }else{
+        
+        cb(null,data);
+      }
+     
+    })
+      }
+    
+    ],function(err,result){
+   if(err){
+    res.render('error',{
+      message:'错误',
+      error:err
+    })
+   }else{
+    //  总页数
+    console.log(result[1]);
+    var totalPage=Math.ceil(totalSize/pageSize);
+    res.render('search',{
+      list:result[1],
+   totalPage:totalPage,
+   pageSize:pageSize,
+      currentPage:page
+    })
+   }
+    })
+  })
+  
+
+
+
+
+
+
+
+
+
+  
 })
 
 

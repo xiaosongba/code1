@@ -6,6 +6,7 @@ var logger = require('morgan');
 var arr=require('./config/ingoreRouter');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var phoneRouter = require('./routes/phone');
 
 var app = express();
 
@@ -39,6 +40,8 @@ if(nickname){
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/phone',phoneRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
