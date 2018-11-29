@@ -72,5 +72,8 @@ html, body {
 img{
   width: 100px;
 }
+a{
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=common.css.map */
