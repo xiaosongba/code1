@@ -7,8 +7,10 @@
   <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/index.css">
+  <!-- <link rel="stylesheet" href="/css/index.css"> -->
   <link rel="stylesheet" href="/css/phone.css">
+  <script src="/js/public.js"></script>
+  
 
 </head>
 
@@ -25,9 +27,9 @@
         <form class="form-inline search-bar" method="POST" action="/phone/addPhone" id="phone" enctype="multipart/form-data">
           名称：<input type="text" name="name"><br>
           品牌：<input type="text" name="brand"><br>
-          官方指导价：<input type="text" name="formal"><br>
-          二手回收价：<input type="text" name="price"><br>
-          图片:<input type="file" name="src"><br>
+          官方指导价：<input type="text" name="formal" ><br>
+          二手回收价：<input type="text" name="price" ><br>
+          图片:<input type="file" name="src" ><br>
           <input type="submit" value="提交">
 
         </form>
@@ -52,21 +54,21 @@
               <th scope="row">
                 <%= i+1 %>
               </th>
-              <td><img src="<%= list[i].src %>" alt=""></td>
-              <td>
+              <td><img src="/<%= list[i].src %>" alt=""></td>
+              <td name=' <%= list[i].name %>' id="name1">
                 <%= list[i].name %>
               </td>
-              <td>
+              <td brand="<%= list[i].brand %>" id="brand1">
                 <%= list[i].brand %>
               </td>
-              <td>
+              <td formal='<%= list[i].formal %>' id="formal1">
                 <%= list[i].formal %>
               </td>
-              <td>
+              <td price="<%= list[i].price%>" id="price1">
                 <%= list[i].price%>
               </td>
               <td>
-                <span class="update" name="id=<%= list[i]._id %>">修改</span>
+                <span class="update" _id="<%= list[i]._id %>" >修改</span>
 
                 
                 <a href="/phone/delete?id=<%= list[i]._id %>">删除</a>
@@ -86,19 +88,19 @@
         <nav>
           <ul class="pagination">
             <li>
-              <a href="/users?page=<%=currentPage-1<1?1:currentPage-1%>&pageSize=<%=pageSize%>" aria-label="Previous">
+              <a href="/phone/?page=<%=currentPage-1<1?1:currentPage-1%>&pageSize=<%=pageSize%>" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
             <% for(var i=0;i<totalPage;i++){%>
             <li class="<%= currentPage===(i+1)?'active':"" %>">
-              <a href="/users?page=<%=i+1%>&pageSize=<%=pageSize%>">
+              <a href="/phone?page=<%=i+1%>&pageSize=<%=pageSize%>">
                 <%=i+1%></a></li>
             <%}%>
 
             <!-- 当前页高亮，其他页面就不高亮 -->
             <li>
-              <a href="/users?page=<%= currentPage+1 >totalPage?totalPage:currentPage+1%>&pageSize=<%=pageSize%>"
+              <a href="/phone?page=<%= currentPage+1 >totalPage?totalPage:currentPage+1%>&pageSize=<%=pageSize%>"
                 aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
               </a>
@@ -111,11 +113,12 @@
 
     <%- include('./common/footer') %>
     <form action="/phone/updata" id="updatePhone" style="display:none">
-      <input type="hidden" name="id" >
-      名称：<input type="text" name="name"><br>
-      品牌：<input type="text" name="brand"><br>
-      官方指导价：<input type="text" name="formal"><br>
-      二手回收价：<input type="text" name="price"><br>
+      <input type="hidden" name="_id"  id="mm">
+      名称：<input type="text" name="name" id="name"><br>
+      品牌：<input type="text" name="brand" id="brand"><br>
+      官方指导价：<input type="text" name="formal" id="formal"><br>
+      二手回收价：<input type="text" name="price" id="price"><br>
+      图片：<input type="file" id=""><br>
       <input type="submit" value="确认修改">
     </form>
   </div>
@@ -123,9 +126,12 @@
 </body>
 
 </html>
+<script src="/js/jquery.min.js"></script>
 <script>
 
-  var updatePhone = document.getElementById("updatePhone");
+
+  $(function(){
+    var updatePhone = document.getElementById("updatePhone");
   var update = document.getElementsByClassName("update");
   console.log(update.length);
   var add = document.getElementById("add");
@@ -135,17 +141,30 @@
 
     phone.style.display = "block";
   }
-  for(var i=0;i<update.length;i++){
-    update[i].onclick = function () {
-      console.log("修改手机");
-    
-    updatePhone.style.display = "block";
 
-  }
+  
+$(".update").click(function(){
+  $("#updatePhone").css('display',"block");
+  var _id= $(this).attr("_id")
+  // console.log(_id);
+  $("#mm").val(_id);
+var price=$(this).parent().prev().attr("price");
+$("#price").val(price)
+var formal=$(this).parent().prev().prev().attr("formal");
+$("#formal").val(formal);
+var brand=$(this).parent().prev().prev().prev().attr("brand");
+$("#brand").val(brand);
 
-    
-  }
+var name=$(this).parent().prev().prev().prev().prev().attr("name");
+$("#name").val(name);
+
+ 
+})
+  })
+  
+ 
+</script>
+
   
 
 
-</script>

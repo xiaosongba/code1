@@ -5,8 +5,21 @@
             <!--这个是访问首页 -->
         </div>
         <div class="right">
-            <p>欢迎你 --（管理员）</p>
-           <button class="btn btn-primary">退出</button>
+            <p id="lan"></p> 
+         <a href="http://localhost:3000/login.html"><button class="btn btn-primary" id="exit">退出</button></a>  
            
         </div>
     </div>
+<!-- <script>
+  window.onload=function(){
+      
+    var exit=document.getElementById("exit");
+
+    exit.onclick=function(){
+        document.cookie = "nickname=,isAdmin=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+   console.log( document.cookie);
+   location.href="http://localhost:3000/login.html"
+   }
+
+  } -->
+</script>

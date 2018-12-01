@@ -1,0 +1,17 @@
+form{
+    position: absolute;
+    width: 600px;
+    height: 550px;
+    background: white;
+    left: 30%;
+    top:20%;
+    display: none;
+    border: 1px solid black;
+    padding-top: 10px;
+/* text-align: center; */
+  }
+  input{
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  

@@ -7,6 +7,7 @@ var arr=require('./config/ingoreRouter');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var phoneRouter = require('./routes/phone');
+var brandRouter = require('./routes/brand');
 
 var app = express();
 
@@ -22,11 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(function(req,res,next){ 
-
-console.log(req.url);
-// 排除这些页面
+console.log(req.cookies);
 if(arr.indexOf(req.url)>-1){
   // 判断字符串是否在数组中，大于-1，说明就存在；(或者！=-1)
+ 
   next();
   return;
 }
@@ -41,6 +41,7 @@ if(nickname){
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/phone',phoneRouter);
+app.use('/brand',brandRouter);
 
 
 // catch 404 and forward to error handler

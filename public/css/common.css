@@ -2,7 +2,7 @@
 /* 全局公用的样式 */
 html, body {
   height: 100%;
-  background-image:url(/images/v.png);
+  background-image:url(/images/bg3.jpg);
 
   /* lv-mian高度不起作用，高度受到限制了 */ }
 
@@ -70,7 +70,7 @@ html, body {
 .pagination {
   float: right; }
 img{
-  width: 100px;
+  width: 40px;
 }
 a{
   cursor: pointer;

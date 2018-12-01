@@ -1,0 +1,14 @@
+body{
+    background-image: url(/images/bg.jpg)
+}
+form{
+    margin: 200px auto;
+    background-color: floralwhite;
+    padding: 20px;
+    border-radius: 4px;
+    
+}
+input{
+    display: inline-block;
+    margin: 5px;
+}

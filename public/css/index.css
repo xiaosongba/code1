@@ -2,3 +2,9 @@
 /* 首页的样式 */
 
 /*# sourceMappingURL=index.css.map */
+.body{
+background-image: url(/images/bg2.jpg)  ;
+opacity: 0.7;
+color:ghostwhite;
+font-size:100px;
+}

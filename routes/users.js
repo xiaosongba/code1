@@ -3,7 +3,9 @@ var MongoClient=require('mongodb').MongoClient;
 var ObjectId=require('mongodb').ObjectId;
 var async=require('async');
 var router = express.Router();
-var url='mongodb://localhost:27017';
+var url='mongodb://127.0.0.1:27017';
+// var url='mongodb://localhost:27017';
+
 // 用户的数据显示
 router.get('/', function(req, res, next) {
   // 前端穿过来的页面，页码
@@ -104,7 +106,9 @@ MongoClient.connect(url,{useNewUrlParser:true},function(err,client){
 
 db.collection('user').find({
   username:username,
-  password:password
+  password:password,
+ 
+  
 }).toArray(function(err,data){
   if(err){
     console.log('查询失败',err);
@@ -120,6 +124,15 @@ db.collection('user').find({
       })
   }else{
     // 这里就是登入成功
+console.log(data);
+// [ { _id: 5c008d64dbcec02a00ec1c02,
+//   username: 'amma',
+//   password: 'amma',
+//   nickname: 'amma',
+//   sex: null,
+//   age: 22,
+//   isAdmin: true } ]
+res.cookie("isAdmin",data[0].isAdmin)
 
     res.cookie('nickname',data[0].nickname,{
       // 设置毫秒数；（让cookie保存10分钟）
@@ -197,7 +210,9 @@ db.collection('user').insert({
         error:err
       })
     }else{
+      
       // 注册成功
+     
       res.redirect('/login.html');
     }
     // 不管成功还是失败，做个关闭操作
@@ -241,6 +256,9 @@ MongoClient.connect(url,{useNewUrlParser:true},function(err,client){
 })
 
 })
+
+
+//============================== 搜索===================================
 router.get('/search',function(req,res,next){
 
   // console.log(req.query.nickname+"======"+"进来了search");
@@ -273,7 +291,7 @@ var totalSize=0;
   
       },
       function(cb){
-    db.collection('user').find({nickname:nickname}).limit(pageSize).skip(page*pageSize-pageSize).toArray(function(err,data){
+    db.collection('user').find({nickname:filter}).limit(pageSize).skip(page*pageSize-pageSize).toArray(function(err,data){
       if(err){
         cb(err);
       }else{
